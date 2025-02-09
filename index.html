@@ -156,27 +156,54 @@
     <div class="button-container">
         <button onclick="copyTable()">Create Copy</button>
     </div>
+    <div class="button-container">
+        <button onclick="sendSummary()">Send Attendance Summary</button>
+    </div>
+
+    <!-- Include EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+
     <script>
-    function copyTable() {
-        const table = document.getElementById("attendance-table");
-        const tableClone = table.cloneNode(true); // Create a copy of the table
-        const tableHTML = tableClone.outerHTML; // Get the HTML string of the copied table
-    
-        // Create a new URL for the new tab
-        const newWindow = window.open('', '_blank');
-        newWindow.document.write(`
-            <html>
-                <head>
-                    <title>Copied Table</title>
-                </head>
-                <body>
-                    <h1>Copied Attendance Form</h1>
-                    ${tableHTML}
-                </body>
-            </html>
-        `);
-        newWindow.document.close();
-    }
+        (function() {
+            emailjs.init("your_user_id"); // Replace with your EmailJS user ID
+        })();
+
+        function sendSummary() {
+            // Get all the rows from the table
+            const rows = document.querySelectorAll("#attendance-table tbody tr");
+            let absentList = [];
+            let presentCount = 0;
+
+            rows.forEach(row => {
+                const checkbox = row.querySelector('input[type="checkbox"]');
+                const name = row.cells[2].textContent; // Get the name from the table row
+
+                if (checkbox.checked) {
+                    presentCount++;
+                } else {
+                    absentList.push(name); // Add absent person's name to the list
+                }
+            });
+
+            // Create the email message content
+            const message = `
+                <p>Summary of Attendance:</p>
+                <p>Total Present: ${presentCount}</p>
+                <p>Absent: ${absentList.join(", ")}</p>
+            `;
+
+            // Send the email using EmailJS
+            emailjs.send("service_oqynfkb", "namelist", {
+                from_name: "Attendance System", // Change this to your name or something relevant
+                to_email: "jiamingqian420@gmail.com", // Replace with the recipient's email address
+                message: message
+            })
+            .then(function(response) {
+                alert("Attendance summary sent successfully!");
+            }, function(error) {
+                alert("Failed to send email. Please try again.");
+            });
+        }
     </script>
 </body>
 </html>
