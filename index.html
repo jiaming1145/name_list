@@ -153,5 +153,31 @@
             </tr>
         </tbody>
     </table>
+    <div class="button-container">
+        <button onclick="copyTable()">Create Copy</button>
+    </div>
+
+    <script>
+        function copyTable() {
+            const table = document.getElementById("attendance-table");
+            const tableClone = table.cloneNode(true); // Create a copy of the table
+            const tableHTML = tableClone.outerHTML; // Get the HTML string of the copied table
+
+            // Open a new window and inject the copied table HTML into it
+            const newWindow = window.open();
+            newWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Copied Table</title>
+                    </head>
+                    <body>
+                        <h1>Copied Attendance Form</h1>
+                        ${tableHTML}
+                    </body>
+                </html>
+            `);
+            newWindow.document.close();
+        }
+    </script>
 </body>
 </html>
