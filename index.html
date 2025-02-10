@@ -161,14 +161,6 @@
     </div>
 
     <!-- Include EmailJS SDK -->
-    div class="button-container">
-        <button onclick="copyTable()">Create Copy</button>
-    </div>
-    <div class="button-container">
-        <button onclick="sendSummary()">Send Attendance Summary</button>
-    </div>
-
-    <!-- Include EmailJS SDK -->
     <script type="text/javascript"
         src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
     </script>
@@ -182,38 +174,48 @@
 
     <script>
         function sendSummary() {
-            const rows = document.querySelectorAll("#attendance-table tbody tr"); // Corrected selector
-            let absentList = [];
-            let presentCount = 0;
+    const rows = document.querySelectorAll("#attendance-table tbody tr");
+    console.log("Total rows found:", rows.length); // Debug 1
 
-            rows.forEach(row => {
-                const checkbox = row.querySelector('input[type="checkbox"]');
-                const name = row.cells[2].textContent;
+    let absentList = [];
+    let presentCount = 0;
 
-                if (checkbox.checked) {
-                    presentCount++;
-                } else {
-                    absentList.push(name);
-                }
-            });
+    rows.forEach((row, index) => {
+        const checkbox = row.querySelector('input[type="checkbox"]');
+        const name = row.cells[2].textContent;
+        
+        // Debug 2: Log checkbox status
+        console.log(`Row ${index + 1}: ${name} - Checked: ${checkbox.checked}`);
 
-            const message = `
-                Summary of Attendance:
-                Total Present: ${presentCount}
-                Absent: ${absentList.join(", ")}
-            `;
-
-            emailjs.send("service_oqynfkb", "template_5w5t07y", {
-                from_name: "Attendance System",
-                to_email: "jiamingqian420@gmail.com",
-                message: message
-            })
-            .then(function(response) {
-                alert("Attendance summary sent successfully!");
-            }, function(error) {
-                alert("Failed to send email. Please try again.");
-            });
+        if (checkbox.checked) {
+            presentCount++;
+        } else {
+            absentList.push(name);
         }
+    });
+
+    // Debug 3: Verify calculated values
+    console.log("Final Count - Present:", presentCount);
+    console.log("Absent List:", absentList);
+
+    const message = `
+        <p>Summary of Attendance:</p>
+        <p>Total Present: ${presentCount}</p>
+        <p>Absent: ${absentList.join(", ")}</p>
+    `;
+
+    // Debug 4: Check final message
+    console.log("Email Content:", message);
+
+    emailjs.send("service_oqynfkb", "template_5w5t07y", {
+        from_name: "Attendance System",
+        to_email: "jiamingqian420@gmail.com",
+        message: message
+    }).then(
+        response => alert("Email sent successfully!"),
+        error => alert(`Email failed: ${error.text}`)
+    );
+}
 
         // Example copyTable function (basic implementation)
         function copyTable() {
