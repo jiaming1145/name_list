@@ -198,9 +198,9 @@
             });
 
             const message = `
-                <p>Summary of Attendance:</p>
-                <p>Total Present: ${presentCount}</p>
-                <p>Absent: ${absentList.join(", ")}</p>
+                Summary of Attendance:
+                Total Present: ${presentCount}
+                Absent: ${absentList.join(", ")}
             `;
 
             emailjs.send("service_oqynfkb", "template_5w5t07y", {
