@@ -161,11 +161,20 @@
     </div>
 
     <!-- Include EmailJS SDK -->
-    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init({
+        publicKey: "ZVv9zetQyZ0C5Wtcu",
+      });
+   })();
+</script>
 
     <script>
         (function() {
-            emailjs.init("tke0YWBKBwjVa2Ucy8XcA"); // Replace with your EmailJS user ID
+            emailjs.init("ZVv9zetQyZ0C5Wtcu"); // Replace with your EmailJS user ID
         })();
 
         function sendSummary() {
