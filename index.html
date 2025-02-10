@@ -161,50 +161,51 @@
     </div>
 
     <!-- Include EmailJS SDK -->
+    div class="button-container">
+        <button onclick="copyTable()">Create Copy</button>
+    </div>
+    <div class="button-container">
+        <button onclick="sendSummary()">Send Attendance Summary</button>
+    </div>
+
+    <!-- Include EmailJS SDK -->
     <script type="text/javascript"
         src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-</script>
-<script type="text/javascript">
-   (function(){
-      emailjs.init({
-        publicKey: "ZVv9zetQyZ0C5Wtcu",
-      });
-   })();
-</script>
+    </script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init({
+                publicKey: "ZVv9zetQyZ0C5Wtcu", // Single initialization
+            });
+        })();
+    </script>
 
     <script>
-        (function() {
-            emailjs.init("ZVv9zetQyZ0C5Wtcu"); // Replace with your EmailJS user ID
-        })();
-
         function sendSummary() {
-            // Get all the rows from the table
-            const rows = document.querySelectorAll("#attendance-table tbody tr");
+            const rows = document.querySelectorAll("#attendance-table tbody tr"); // Corrected selector
             let absentList = [];
             let presentCount = 0;
 
             rows.forEach(row => {
                 const checkbox = row.querySelector('input[type="checkbox"]');
-                const name = row.cells[2].textContent; // Get the name from the table row
+                const name = row.cells[2].textContent;
 
                 if (checkbox.checked) {
                     presentCount++;
                 } else {
-                    absentList.push(name); // Add absent person's name to the list
+                    absentList.push(name);
                 }
             });
 
-            // Create the email message content
             const message = `
                 <p>Summary of Attendance:</p>
                 <p>Total Present: ${presentCount}</p>
                 <p>Absent: ${absentList.join(", ")}</p>
             `;
 
-            // Send the email using EmailJS
             emailjs.send("service_oqynfkb", "template_5w5t07y", {
-                from_name: "Attendance System", // Change this to your name or something relevant
-                to_email: "jiamingqian420@gmail.com", // Replace with the recipient's email address
+                from_name: "Attendance System",
+                to_email: "jiamingqian420@gmail.com",
                 message: message
             })
             .then(function(response) {
@@ -212,6 +213,13 @@
             }, function(error) {
                 alert("Failed to send email. Please try again.");
             });
+        }
+
+        // Example copyTable function (basic implementation)
+        function copyTable() {
+            const table = document.getElementById("attendance-table");
+            const clone = table.cloneNode(true);
+            document.body.appendChild(clone);
         }
     </script>
 </body>
