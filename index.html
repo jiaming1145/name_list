@@ -207,13 +207,14 @@
         const name = row.cells[3].textContent;
         
         
-        if (checkbox.checked&&!latebox.checked) {
+        if (checkbox.checked||latebox.checked) {
             presentCount++;
-        } else if(latebox.checked){
-            lateList.push(name);
-        }
-        else{
+        } 
+        else
             absentList.push(name);
+        if(latebox.checked){
+            lateList.push(name);
+            lateCount++;
         }
     });
 
@@ -223,6 +224,7 @@
         Summary of Attendance:
         Total Present: ${presentCount}
         Absent: ${absentList.join(", ")}
+        Late: ${lateList.join(", ")}
     `;
 
     // Debug 4: Check final message
