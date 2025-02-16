@@ -193,14 +193,14 @@
     </script>
 
     <script>
-        function sendSummary() {
-    const rows = document.querySelectorAll("#attendance-table tbody tr");
-    console.log("Total rows found:", rows.length); // Debug 1
-
     let absentList = [];
     let presentCount = 0;
     let lateCount=0;
     let lateList=[];
+    function sendSummary() {
+        const rows = document.querySelectorAll("#attendance-table tbody tr");
+        console.log("Total rows found:", rows.length); // Debug 1
+
     rows.forEach((row, index) => {
         const checkbox = row.querySelector('input[name="attendance"]');
         const latebox=row.querySelector('input[name="late"]')
@@ -236,13 +236,14 @@
         response => alert("Email sent successfully!"),
         error => alert(`Email failed: ${error.text}`)
     );
-    function copyTable() {
-            console.log("Final Count - Present:", presentCount);
-            console.log("Absent List:", absentList);
-            console.log("late List",lateList);
-            console.log(`Row ${index + 1}: ${name} - Checked: ${checkbox.checked}`);
-        }
+    
 }    
+function copyTable() {
+        console.log("Final Count - Present:", presentCount);
+        console.log("Absent List:", absentList);
+        console.log("late List",lateList);
+        console.log(`Row ${index + 1}: ${name} - Checked: ${checkbox.checked}`);
+        }
     </script>
 </body>
 </html>
