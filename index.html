@@ -206,8 +206,7 @@
         const latebox=row.querySelector('input[name="late"]')
         const name = row.cells[3].textContent;
         
-        // Debug 2: Log checkbox status
-        console.log(`Row ${index + 1}: ${name} - Checked: ${checkbox.checked}`);
+        
         if (checkbox.checked&&!latebox.checked) {
             presentCount++;
         } else if(latebox.checked){
@@ -219,9 +218,7 @@
     });
 
     // Debug 3: Verify calculated values
-    console.log("Final Count - Present:", presentCount);
-    console.log("Absent List:", absentList);
-    console.log("late List",lateList);
+    
     const message = `
         Summary of Attendance:
         Total Present: ${presentCount}
@@ -241,12 +238,13 @@
     );
 }
 
-        // Example copyTable function (basic implementation)
-        //function copyTable() {
-        //    const table = document.getElementById("attendance-table");
-        //    const clone = table.cloneNode(true);
-        //    document.body.appendChild(clone);
-        //}
+        
+        function copyTable() {
+            console.log("Final Count - Present:", presentCount);
+            console.log("Absent List:", absentList);
+            console.log("late List",lateList);
+            console.log(`Row ${index + 1}: ${name} - Checked: ${checkbox.checked}`);
+        }
     </script>
 </body>
 </html>
