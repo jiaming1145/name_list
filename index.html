@@ -31,122 +31,142 @@
         <thead>
             <tr>
                 <th>Present</th>
-                <th>Class</th>
+                <th>Late</th>
+                <th>ID</th>
                 <th>Name</th>
-                <th>Number</th>
+                <th>Age</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td class="checkbox-cell"><input type="checkbox" name="attendance"></td>
+                <td class="checkbox-cell"><input type="checkbox" name="late"></td>
                 <td>7-196</td>
                 <td>Yichen</td>
                 <td>10</td>
             </tr>
             <tr>
                 <td class="checkbox-cell"><input type="checkbox" name="attendance"></td>
+                <td class="checkbox-cell"><input type="checkbox" name="late"></td>
                 <td>7-196</td>
                 <td>Kevin</td>
                 <td>8</td>
             </tr>
             <tr>
                 <td class="checkbox-cell"><input type="checkbox" name="attendance"></td>
+                <td class="checkbox-cell"><input type="checkbox" name="late"></td>
                 <td>4-301</td>
                 <td>Hannah</td>
                 <td>10</td>
             </tr>
             <tr>
                 <td class="checkbox-cell"><input type="checkbox" name="attendance"></td>
+                <td class="checkbox-cell"><input type="checkbox" name="late"></td>
                 <td>7-348</td>
                 <td>Henry</td>
                 <td>8</td>
             </tr>
             <tr>
                 <td class="checkbox-cell"><input type="checkbox" name="attendance"></td>
+                <td class="checkbox-cell"><input type="checkbox" name="late"></td>
                 <td>7-348</td>
                 <td>Luna</td>
                 <td>6</td>
             </tr>
             <tr>
                 <td class="checkbox-cell"><input type="checkbox" name="attendance"></td>
+                <td class="checkbox-cell"><input type="checkbox" name="late"></td>
                 <td>4-383</td>
                 <td>Joshua</td>
                 <td>7</td>
             </tr>
             <tr>
                 <td class="checkbox-cell"><input type="checkbox" name="attendance"></td>
+                <td class="checkbox-cell"><input type="checkbox" name="late"></td>
                 <td>2-299</td>
                 <td>Winchell</td>
                 <td>9</td>
             </tr>
             <tr>
                 <td class="checkbox-cell"><input type="checkbox" name="attendance"></td>
+                <td class="checkbox-cell"><input type="checkbox" name="late"></td>
                 <td>7-384</td>
                 <td>Morgan</td>
                 <td>8</td>
             </tr>
             <tr>
                 <td class="checkbox-cell"><input type="checkbox" name="attendance"></td>
+                <td class="checkbox-cell"><input type="checkbox" name="late"></td>
                 <td>1-20</td>
                 <td>Kaitlyn</td>
                 <td>8</td>
             </tr>
             <tr>
                 <td class="checkbox-cell"><input type="checkbox" name="attendance"></td>
+                <td class="checkbox-cell"><input type="checkbox" name="late"></td>
                 <td>4-408</td>
                 <td>Zeen</td>
                 <td>13</td>
             </tr>
             <tr>
                 <td class="checkbox-cell"><input type="checkbox" name="attendance"></td>
+                <td class="checkbox-cell"><input type="checkbox" name="late"></td>
                 <td>4-149</td>
                 <td>Shiqi</td>
                 <td>11</td>
             </tr>
             <tr>
                 <td class="checkbox-cell"><input type="checkbox" name="attendance"></td>
+                <td class="checkbox-cell"><input type="checkbox" name="late"></td>
                 <td>4-149</td>
                 <td>Shiwei</td>
                 <td>11</td>
             </tr>
             <tr>
                 <td class="checkbox-cell"><input type="checkbox" name="attendance"></td>
+                <td class="checkbox-cell"><input type="checkbox" name="late"></td>
                 <td>7-95</td>
                 <td>Cindy</td>
                 <td>8</td>
             </tr>
             <tr>
                 <td class="checkbox-cell"><input type="checkbox" name="attendance"></td>
+                <td class="checkbox-cell"><input type="checkbox" name="late"></td>
                 <td>8-216</td>
                 <td>Nora</td>
                 <td>8</td>
             </tr>
             <tr>
                 <td class="checkbox-cell"><input type="checkbox" name="attendance"></td>
+                <td class="checkbox-cell"><input type="checkbox" name="late"></td>
                 <td>8-162</td>
                 <td>Sally</td>
                 <td>8</td>
             </tr>
             <tr>
                 <td class="checkbox-cell"><input type="checkbox" name="attendance"></td>
+                <td class="checkbox-cell"><input type="checkbox" name="late"></td>
                 <td>8-237</td>
                 <td>Ethan</td>
                 <td>11</td>
             </tr>
             <tr>
                 <td class="checkbox-cell"><input type="checkbox" name="attendance"></td>
+                <td class="checkbox-cell"><input type="checkbox" name="late"></td>
                 <td>8-238</td>
                 <td>Mason</td>
                 <td>12</td>
             </tr>
             <tr>
                 <td class="checkbox-cell"><input type="checkbox" name="attendance"></td>
+                <td class="checkbox-cell"><input type="checkbox" name="late"></td>
                 <td>7-326</td>
                 <td>Regina</td>
                 <td>9</td>
             </tr>
             <tr>
                 <td class="checkbox-cell"><input type="checkbox" name="attendance"></td>
+                <td class="checkbox-cell"><input type="checkbox" name="late"></td>
                 <td>7-326</td>
                 <td>Angel</td>
                 <td>9</td>
@@ -179,17 +199,21 @@
 
     let absentList = [];
     let presentCount = 0;
-
+    let lateCount=0;
+    let lateList=[];
     rows.forEach((row, index) => {
-        const checkbox = row.querySelector('input[type="checkbox"]');
-        const name = row.cells[2].textContent;
+        const checkbox = row.querySelector('input[name="attendance"]');
+        const latebox=row.querySelector('input[name="late"]')
+        const name = row.cells[3].textContent;
         
         // Debug 2: Log checkbox status
         console.log(`Row ${index + 1}: ${name} - Checked: ${checkbox.checked}`);
-
-        if (checkbox.checked) {
+        if (checkbox.checked&&!latebox.checked) {
             presentCount++;
-        } else {
+        } else if(latebox.checked){
+            lateList.push(name);
+        }
+        else{
             absentList.push(name);
         }
     });
@@ -197,7 +221,7 @@
     // Debug 3: Verify calculated values
     console.log("Final Count - Present:", presentCount);
     console.log("Absent List:", absentList);
-
+    console.log("late List",lateList);
     const message = `
         Summary of Attendance:
         Total Present: ${presentCount}
